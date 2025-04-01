@@ -1,18 +1,14 @@
 {
-  "name": "prisma-class-validator-generator",
-  "version": "5.0.0",
+  "name": "@serviceup/prisma-generator-class-validator",
+  "version": "6.3.4",
   "description": "Prisma 2+ generator to emit typescript models of your database with class validator",
-  "repository": "https://github.com/omar-dulaimi/prisma-class-validator-generator",
+  "repository": "https://github.com/ServiceUpAuto/prisma-class-validator-generator",
   "bin": {
-    "prisma-class-validator-generator": "lib/generator.js"
+    "prisma-generator-class-validator": "lib/generator.js"
   },
   "scripts": {
     "start": "tsc && npx prisma generate",
     "package:publish": "./package.sh && cd package && npm publish"
-  },
-  "author": {
-    "name": "Omar Dulaimi",
-    "url": "https://github.com/omar-dulaimi"
   },
   "keywords": [
     "prisma",
@@ -20,29 +16,32 @@
     "prisma-schema",
     "class-validator",
     "prisma-generator",
-    "prisma-class-validator-generator"
+    "prisma-generator-class-validator"
   ],
   "license": "MIT",
   "dependencies": {
-    "@prisma/client": "^5.12.1",
-    "@prisma/generator-helper": "^5.12.1",
-    "@prisma/internals": "^5.12.1",
+    "@prisma/client": "^6.3.1",
+    "@prisma/generator-helper": "^6.3.1",
+    "@prisma/internals": "^6.3.1",
     "class-validator": "^0.13.2",
     "pluralize": "^8.0.0",
     "prettier": "^2.8.8",
-    "ts-morph": "^22.0.0",
+    "ts-morph": "^25.0.0",
     "tslib": "^2.6.2"
   },
   "devDependencies": {
     "@types/node": "^18.19.31",
     "@types/pluralize": "0.0.33",
     "@types/prettier": "^2.7.3",
-    "prisma": "^5.12.1",
+    "class-validator": "^0.14.1",
+    "prisma": "^6.3.1",
     "typescript": "^5.4.5"
   },
-  "bugs": {
-    "url": "https://github.com/omar-dulaimi/prisma-class-validator-generator/issues"
+  "peerDependencies": {
+    "class-validator": "^0.14.1"
   },
-  "homepage": "https://github.com/omar-dulaimi/prisma-class-validator-generator#readme",
-  "private": true
+  "bugs": {
+    "url": "https://github.com/ServiceUpAuto/prisma-class-validator-generator/issues"
+  },
+  "homepage": "https://github.com/ServiceUpAuto/prisma-class-validator-generator#readme"
 }

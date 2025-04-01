@@ -68,6 +68,9 @@ export const getTSDataTypeFromFieldType = (field: PrismaDMMF.Field) => {
   if (field.isList) {
     type = `${type}[]`;
   }
+  if (!field.isRequired) {
+    type += ' | null';
+  }
   return type;
 };
 
@@ -170,6 +173,7 @@ export const generateRelationImportsImport = (
   sourceFile.addImportDeclaration({
     moduleSpecifier: './',
     namedImports: relationImports,
+    isTypeOnly: true,
   });
 };
 export const generateHelpersImports = (

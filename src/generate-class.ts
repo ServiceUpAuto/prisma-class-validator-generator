@@ -45,9 +45,11 @@ export default async function generateClass(
     }
   });
 
-  generateRelationImportsImport(sourceFile, [
-    ...relationImports,
-  ] as Array<string>);
+  if ([...relationImports].length > 0) {
+    generateRelationImportsImport(sourceFile, [
+      ...relationImports,
+    ] as Array<string>);
+  }
 
   if (shouldImportHelpers(model.fields as PrismaDMMF.Field[])) {
     generateHelpersImports(sourceFile, ['getEnumValues']);
