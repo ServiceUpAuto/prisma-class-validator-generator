@@ -40,6 +40,9 @@
   "peerDependencies": {
     "class-validator": "^0.14.1"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "bugs": {
     "url": "https://github.com/ServiceUpAuto/prisma-class-validator-generator/issues"
   },
