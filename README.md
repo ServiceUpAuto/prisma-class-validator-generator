@@ -8,6 +8,8 @@ Automatically generate typescript models of your database with class validator v
 - [Installation](#installing)
 - [Usage](#usage)
 - [Additional Options](#additional-options)
+- [Development](#development)
+- [Running Tests](#running-tests)
 
 ## Installation
 
@@ -77,7 +79,7 @@ export class User {
 
 ## Additional Options
 
-| Option   |  Description                              | Type     |  Default      |
+| Option   |  Description                              | Type     |  Default      |
 | -------- | ----------------------------------------- | -------- | ------------- |
 | `output` | Output directory for the generated models | `string` | `./generated` |
 
@@ -89,3 +91,39 @@ generator class_validator {
   output     = "./generated-models"
 }
 ```
+
+## Development
+
+This is a Prisma generator that creates TypeScript class models with class-validator decorators based on your Prisma schema.
+
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Build the project: `npm run build`
+4. Test the generator: `npm test`
+
+## Running Tests
+
+The project includes tests for the helper functions:
+
+```bash
+# Run helper function tests (most reliable)
+npm test
+
+# Run all tests (including integration tests - may require a valid Prisma schema) 
+npm run test:all
+
+# Run tests with watch mode during development
+npm run test:watch
+
+# Run tests with coverage report
+npm run test:coverage
+
+# Build and run tests
+npm run build:test
+```
+
+### Testing Notes
+
+Integration tests require a valid Prisma schema and can be more fragile. They're best run in a controlled environment where all dependencies are properly set up.
+
+For regular development, stick to the helper tests (`npm test`) which are faster and more reliable.

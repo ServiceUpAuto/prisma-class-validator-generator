@@ -7,8 +7,14 @@
     "prisma-generator-class-validator": "lib/generator.js"
   },
   "scripts": {
-    "start": "tsc && npx prisma generate",
-    "package:publish": "./package.sh && cd package && npm publish"
+    "start": "tsc -p tsconfig.build.json && npx prisma generate",
+    "package:publish": "./package.sh && cd package && npm publish",
+    "test": "jest test/unit/helpers.test.ts",
+    "test:all": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "build": "tsc -p tsconfig.build.json",
+    "build:test": "tsc -p tsconfig.build.json && jest"
   },
   "keywords": [
     "prisma",
@@ -23,18 +29,20 @@
     "@prisma/client": "^6.3.1",
     "@prisma/generator-helper": "^6.3.1",
     "@prisma/internals": "^6.3.1",
-    "class-validator": "^0.13.2",
     "pluralize": "^8.0.0",
     "prettier": "^2.8.8",
     "ts-morph": "^25.0.0",
     "tslib": "^2.6.2"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.12",
     "@types/node": "^18.19.31",
     "@types/pluralize": "0.0.33",
     "@types/prettier": "^2.7.3",
     "class-validator": "^0.14.1",
+    "jest": "^29.7.0",
     "prisma": "^6.3.1",
+    "ts-jest": "^29.1.2",
     "typescript": "^5.4.5"
   },
   "peerDependencies": {

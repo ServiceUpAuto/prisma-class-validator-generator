@@ -11,11 +11,10 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "outDir": "./lib",
-    "rootDir": ".",
-    "typeRoots": ["./node_modules/@types", "src/types.ts"],
+    "rootDir": "./src",
+    "typeRoots": ["src/types.ts"],
     "skipLibCheck": true,
-    "experimentalDecorators": true,
-    "types": ["jest", "node"]
+    "experimentalDecorators": true
   },
-  "include": ["./src/**/**/*.ts", "./test/**/**/*.ts"]
+  "include": ["./src/**/**/*.ts"]
 }
