@@ -1,6 +1,6 @@
 {
   "name": "@serviceup/prisma-generator-class-validator",
-  "version": "6.5.0",
+  "version": "6.6.0",
   "description": "Prisma 2+ generator to emit typescript models of your database with class validator",
   "repository": "https://github.com/ServiceUpAuto/prisma-class-validator-generator",
   "bin": {
@@ -46,7 +46,7 @@
     "typescript": "^5.4.5"
   },
   "peerDependencies": {
-    "class-validator": "^0.14.1"
+    "class-validator": "^0.14.0"
   },
   "publishConfig": {
     "access": "public"
