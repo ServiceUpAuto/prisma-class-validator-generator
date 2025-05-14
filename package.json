@@ -4,7 +4,7 @@
   "description": "Prisma 2+ generator to emit typescript models of your database with class validator",
   "repository": "https://github.com/ServiceUpAuto/prisma-class-validator-generator",
   "bin": {
-    "prisma-generator-class-validator": "lib/generator.js"
+    "serviceup-prisma-generator-class-validator": "lib/generator.js"
   },
   "scripts": {
     "start": "tsc -p tsconfig.build.json && npx prisma generate",
@@ -22,7 +22,7 @@
     "prisma-schema",
     "class-validator",
     "prisma-generator",
-    "prisma-generator-class-validator"
+    "serviceup-prisma-generator-class-validator"
   ],
   "license": "MIT",
   "dependencies": {
