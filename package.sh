@@ -7,6 +7,8 @@ tsc
 rm -r package
 mkdir package
 
+npm run build
+
 echo "Copying files..."
 cp -r lib package/lib
 cp package.json README.md LICENSE package
