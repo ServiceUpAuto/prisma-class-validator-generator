@@ -122,6 +122,60 @@ describe('helpers', () => {
       expect(decorators).toContainEqual({ name: 'IsOptional', arguments: [] });
       expect(decorators).toContainEqual({ name: 'IsString', arguments: [] });
     });
+
+    test('uses IsArray and each option for scalar list fields', () => {
+      const field = {
+        name: 'allowedServiceTypes',
+        kind: 'scalar',
+        type: 'String',
+        isRequired: true,
+        isList: true,
+      } as DMMF.Field;
+
+      const decorators = getDecoratorsByFieldType(field);
+      expect(decorators).toEqual([
+        { name: 'IsDefined', arguments: [] },
+        { name: 'IsArray', arguments: [] },
+        { name: 'IsString', arguments: ['{ each: true }'] },
+      ]);
+    });
+
+    test('uses ValidateNested for relation list fields', () => {
+      const field = {
+        name: 'posts',
+        kind: 'object',
+        type: 'Post',
+        isRequired: true,
+        isList: true,
+      } as DMMF.Field;
+
+      const decorators = getDecoratorsByFieldType(field);
+      expect(decorators).toEqual([
+        { name: 'IsDefined', arguments: [] },
+        { name: 'IsArray', arguments: [] },
+        { name: 'ValidateNested', arguments: ['{ each: true }'] },
+      ]);
+    });
+
+    test('uses IsIn with each option for enum list fields', () => {
+      const field = {
+        name: 'labels',
+        kind: 'enum',
+        type: 'Role',
+        isRequired: true,
+        isList: true,
+      } as DMMF.Field;
+
+      const decorators = getDecoratorsByFieldType(field);
+      expect(decorators).toEqual([
+        { name: 'IsDefined', arguments: [] },
+        { name: 'IsArray', arguments: [] },
+        {
+          name: 'IsIn',
+          arguments: ['getEnumValues(Role)', '{ each: true }'],
+        },
+      ]);
+    });
   });
 
   describe('getDecoratorsImportsByType', () => {
@@ -167,6 +221,21 @@ describe('helpers', () => {
       const imports = getDecoratorsImportsByType(field);
       
       expect(imports).toContain('IsIn');
+      expect(imports).toContain('IsDefined');
+    });
+
+    test('returns IsArray and ValidateNested for relation lists', () => {
+      const field = {
+        name: 'posts',
+        kind: 'object',
+        type: 'Post',
+        isRequired: true,
+        isList: true,
+      } as DMMF.Field;
+
+      const imports = getDecoratorsImportsByType(field);
+      expect(imports).toContain('IsArray');
+      expect(imports).toContain('ValidateNested');
       expect(imports).toContain('IsDefined');
     });
   });

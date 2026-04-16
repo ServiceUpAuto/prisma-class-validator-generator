@@ -76,54 +76,94 @@ export const getTSDataTypeFromFieldType = (field: PrismaDMMF.Field) => {
 
 export const getDecoratorsByFieldType = (field: PrismaDMMF.Field) => {
   const decorators: OptionalKind<DecoratorStructure>[] = [];
+
+  if (field.isRequired) {
+    decorators.push({ name: 'IsDefined', arguments: [] });
+  } else {
+    decorators.push({ name: 'IsOptional', arguments: [] });
+  }
+
+  if (field.isList) {
+    decorators.push({ name: 'IsArray', arguments: [] });
+  }
+
+  const eachArgs: string[] = field.isList ? ['{ each: true }'] : [];
+
+  if (field.kind === 'enum') {
+    decorators.push({
+      name: 'IsIn',
+      arguments: field.isList
+        ? [`getEnumValues(${String(field.type)})`, '{ each: true }']
+        : [`getEnumValues(${String(field.type)})`],
+    });
+    return decorators;
+  }
+
+  if (field.kind === 'object') {
+    if (field.isList) {
+      decorators.push({
+        name: 'ValidateNested',
+        arguments: ['{ each: true }'],
+      });
+    }
+    return decorators;
+  }
+
   switch (field.type) {
     case 'Int':
       decorators.push({
         name: 'IsInt',
-        arguments: [],
+        arguments: eachArgs,
       });
       break;
     case 'DateTime':
       decorators.push({
         name: 'IsDate',
-        arguments: [],
+        arguments: eachArgs,
       });
       break;
     case 'String':
       decorators.push({
         name: 'IsString',
-        arguments: [],
+        arguments: eachArgs,
       });
       break;
     case 'Boolean':
       decorators.push({
         name: 'IsBoolean',
-        arguments: [],
+        arguments: eachArgs,
       });
       break;
   }
-  if (field.isRequired) {
-    decorators.unshift({
-      name: 'IsDefined',
-      arguments: [],
-    });
-  } else {
-    decorators.unshift({
-      name: 'IsOptional',
-      arguments: [],
-    });
-  }
-  if (field.kind === 'enum') {
-    decorators.push({
-      name: 'IsIn',
-      arguments: [`getEnumValues(${String(field.type)})`],
-    });
-  }
+
   return decorators;
 };
 
 export const getDecoratorsImportsByType = (field: PrismaDMMF.Field) => {
-  const validatorImports = new Set();
+  const validatorImports = new Set<string>();
+
+  if (field.isRequired) {
+    validatorImports.add('IsDefined');
+  } else {
+    validatorImports.add('IsOptional');
+  }
+
+  if (field.isList) {
+    validatorImports.add('IsArray');
+  }
+
+  if (field.kind === 'enum') {
+    validatorImports.add('IsIn');
+    return [...validatorImports];
+  }
+
+  if (field.kind === 'object') {
+    if (field.isList) {
+      validatorImports.add('ValidateNested');
+    }
+    return [...validatorImports];
+  }
+
   switch (field.type) {
     case 'Int':
       validatorImports.add('IsInt');
@@ -138,14 +178,7 @@ export const getDecoratorsImportsByType = (field: PrismaDMMF.Field) => {
       validatorImports.add('IsBoolean');
       break;
   }
-  if (field.isRequired) {
-    validatorImports.add('IsDefined');
-  } else {
-    validatorImports.add('IsOptional');
-  }
-  if (field.kind === 'enum') {
-    validatorImports.add('IsIn');
-  }
+
   return [...validatorImports];
 };
 
