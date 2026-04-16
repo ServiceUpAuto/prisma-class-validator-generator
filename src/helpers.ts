@@ -142,41 +142,37 @@ export const getDecoratorsByFieldType = (field: PrismaDMMF.Field) => {
 export const getDecoratorsImportsByType = (field: PrismaDMMF.Field) => {
   const validatorImports = new Set<string>();
 
-  if (field.isRequired) {
-    validatorImports.add('IsDefined');
+  if (field.kind === 'enum') {
+    validatorImports.add('IsIn');
+  } else if (field.kind === 'object') {
+    if (field.isList) {
+      validatorImports.add('ValidateNested');
+    }
   } else {
-    validatorImports.add('IsOptional');
+    switch (field.type) {
+      case 'Int':
+        validatorImports.add('IsInt');
+        break;
+      case 'DateTime':
+        validatorImports.add('IsDate');
+        break;
+      case 'String':
+        validatorImports.add('IsString');
+        break;
+      case 'Boolean':
+        validatorImports.add('IsBoolean');
+        break;
+    }
   }
 
   if (field.isList) {
     validatorImports.add('IsArray');
   }
 
-  if (field.kind === 'enum') {
-    validatorImports.add('IsIn');
-    return [...validatorImports];
-  }
-
-  if (field.kind === 'object') {
-    if (field.isList) {
-      validatorImports.add('ValidateNested');
-    }
-    return [...validatorImports];
-  }
-
-  switch (field.type) {
-    case 'Int':
-      validatorImports.add('IsInt');
-      break;
-    case 'DateTime':
-      validatorImports.add('IsDate');
-      break;
-    case 'String':
-      validatorImports.add('IsString');
-      break;
-    case 'Boolean':
-      validatorImports.add('IsBoolean');
-      break;
+  if (field.isRequired) {
+    validatorImports.add('IsDefined');
+  } else {
+    validatorImports.add('IsOptional');
   }
 
   return [...validatorImports];
