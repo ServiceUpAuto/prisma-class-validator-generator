@@ -219,9 +219,13 @@ export const generateEnumImports = (
   sourceFile: SourceFile,
   fields: PrismaDMMF.Field[],
 ) => {
-  const enumsToImport = fields
-    .filter((field) => field.kind === 'enum')
-    .map((field) => field.type);
+  const enumsToImport = Array.from(
+    new Set(
+      fields
+        .filter((field) => field.kind === 'enum')
+        .map((field) => field.type),
+    ),
+  );
 
   if (enumsToImport.length > 0) {
     sourceFile.addImportDeclaration({
