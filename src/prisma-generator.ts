@@ -14,13 +14,10 @@ export async function generate(options: GeneratorOptions) {
   await fs.mkdir(outputDir, { recursive: true });
   await removeDir(outputDir, true);
 
-  const prismaClientProvider = options.otherGenerators.find(
-    (it) => parseEnvValue(it.provider) === 'prisma-client-js',
-  );
-
+  // Prisma 7 dropped `previewFeatures` from `GetDMMFOptions`; the wasm
+  // parser reads the generator block directly from the schema text.
   const prismaClientDmmf = await getDMMF({
     datamodel: options.datamodel,
-    previewFeatures: prismaClientProvider?.previewFeatures,
   });
 
   const enumNames = new Set<string>();
